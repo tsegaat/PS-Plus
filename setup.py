@@ -12,4 +12,5 @@ setup(
     author="Tsega Amanuel",
     license="MIT LICENSE",
     install_requires=[],
+    url='https://github.com/Tsega41/PS-Plus'
 )
