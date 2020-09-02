@@ -1,4 +1,5 @@
-# PS-Plus :video_game:
-# This is a program that checks the Playstation website and tell you the free playstation plus games this month
+This libary is used to get content from the playstation website and give 
+you different functions to access specific parts and parts that you
+would want in the playstation website.
 
-NOTE: when trying to run you have beautiful soap installed in your working directory
+It uses beautiful soap to get the content from the website.
