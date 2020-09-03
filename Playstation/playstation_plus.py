@@ -7,7 +7,7 @@ from PIL import ImageTk, Image
 from tkinter import ttk
 
 
-def ps_plus_games_next_month():
+def ps_plus_games_this_month():
 
     # getting the site
     site = requests.get(
@@ -33,8 +33,7 @@ def ps_plus_games_next_month():
 
     root = tkinter.Tk()
     root.resizable(0, 0)
-    root.title("Next Month PS Plus games")
-    root.iconbitmap("Self Work\Playstation\Playstation.ico")
+    root.title("This month's PS Plus games")
 
     # geting the image to use in the gui
     images = []
@@ -62,7 +61,7 @@ def ps_plus_games_next_month():
     root.mainloop()
 
 
-def ps_plus_games_this_month():
+def ps_plus_games_previous_month():
 
     # getting the site
     site = requests.get(
@@ -88,8 +87,8 @@ def ps_plus_games_this_month():
 
     root = tkinter.Tk()
     root.resizable(0, 0)
-    root.title("This Month PS Plus games")
-    root.iconbitmap("Self Work\Playstation\Playstation.ico")
+    root.title("Previous month's PS Plus games")
+    root['background'] = 'black'
 
     # geting the image to use in the gui
     images = []
@@ -138,8 +137,8 @@ def ps_plus_price():
         )
 
     root = tkinter.Tk()
-    root.title("This Month PS Plus games")
-    root.iconbitmap("Self Work\Playstation\Playstation.ico")
+    root.title("Playstation Plus Price")
+
     root.resizable(0, 0)
 
     # geting the image to use in the gui
@@ -222,7 +221,6 @@ def free_add_ons():
 
     # putting the titles on the gui
     root = tkinter.Tk()
-    # root.iconbitmap("Playstation.ico")
     root.title("Free addons")
     root.geometry("1000x1000")
     root.resizable(0, 0)
@@ -235,6 +233,7 @@ def free_add_ons():
     # Create a canvas
     my_canvas = tkinter.Canvas(main_frame)
     my_canvas.pack(side="left", fill="both", expand=1)
+    my_canvas['background'] = 'black'
 
     # Add a scrollbar to the canvas
     my_scrollbar = ttk.Scrollbar(
@@ -250,6 +249,7 @@ def free_add_ons():
 
     # Create another frame in the canvas
     secound_frame = tkinter.Frame(my_canvas)
+    secound_frame['background'] = 'black'
 
     # Add the new frame to a window in the canvas
     my_canvas.create_window((0, 0), window=secound_frame, anchor="nw")
@@ -288,4 +288,4 @@ def free_add_ons():
     root.mainloop()
 
 
-free_add_ons()
+ps_plus_games_this_month()
