@@ -286,6 +286,3 @@ def free_add_ons():
         f += 3
 
     root.mainloop()
-
-
-ps_plus_games_this_month()
