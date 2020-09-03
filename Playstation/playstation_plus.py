@@ -178,10 +178,12 @@ def free_add_ons():
     bsObj1 = BeautifulSoup(site1, "lxml")
 
     for i in range(len(bsObj1.find_all(class_="grid-cell__title"))):
-        titles.append(bsObj1.find_all(class_="grid-cell__title")[i].find("span").text)
+        titles.append(bsObj1.find_all(class_="grid-cell__title")
+                      [i].find("span").text)
     for i in range(len(bsObj1.find_all(class_="grid-cell__title"))):
         images.append(
-            bsObj1.find_all(class_="product-image__img--main")[i].find("img").get("src")
+            bsObj1.find_all(
+                class_="product-image__img--main")[i].find("img").get("src")
         )
 
     # getting the next page
@@ -193,10 +195,12 @@ def free_add_ons():
     bsObj2 = BeautifulSoup(site2, "lxml")
 
     for i in range(len(bsObj2.find_all(class_="grid-cell__title"))):
-        titles.append(bsObj2.find_all(class_="grid-cell__title")[i].find("span").text)
+        titles.append(bsObj2.find_all(class_="grid-cell__title")
+                      [i].find("span").text)
     for i in range(len(bsObj2.find_all(class_="grid-cell__title"))):
         images.append(
-            bsObj2.find_all(class_="product-image__img--main")[i].find("img").get("src")
+            bsObj2.find_all(
+                class_="product-image__img--main")[i].find("img").get("src")
         )
 
     # getting the third page
@@ -208,15 +212,17 @@ def free_add_ons():
     bsObj3 = BeautifulSoup(site2, "lxml")
 
     for i in range(len(bsObj3.find_all(class_="grid-cell__title"))):
-        titles.append(bsObj3.find_all(class_="grid-cell__title")[i].find("span").text)
+        titles.append(bsObj3.find_all(class_="grid-cell__title")
+                      [i].find("span").text)
     for i in range(len(bsObj3.find_all(class_="grid-cell__title"))):
         images.append(
-            bsObj3.find_all(class_="product-image__img--main")[i].find("img").get("src")
+            bsObj3.find_all(
+                class_="product-image__img--main")[i].find("img").get("src")
         )
 
     # putting the titles on the gui
     root = tkinter.Tk()
-    root.iconbitmap("Self Work\Playstation\Playstation.ico")
+    # root.iconbitmap("Playstation.ico")
     root.title("Free addons")
     root.geometry("1000x1000")
     root.resizable(0, 0)
@@ -231,13 +237,15 @@ def free_add_ons():
     my_canvas.pack(side="left", fill="both", expand=1)
 
     # Add a scrollbar to the canvas
-    my_scrollbar = ttk.Scrollbar(main_frame, orient="vertical", command=my_canvas.yview)
+    my_scrollbar = ttk.Scrollbar(
+        main_frame, orient="vertical", command=my_canvas.yview)
     my_scrollbar.pack(side="right", fill="y")
 
     # Configure the canvas
     my_canvas.configure(yscrollcommand=my_scrollbar.set)
     my_canvas.bind(
-        "<Configure>", lambda e: my_canvas.configure(scrollregion=my_canvas.bbox("all"))
+        "<Configure>", lambda e: my_canvas.configure(
+            scrollregion=my_canvas.bbox("all"))
     )
 
     # Create another frame in the canvas
@@ -265,8 +273,9 @@ def free_add_ons():
             image_label = tkinter.Label(secound_frame, image=fixed_images[j]).grid(
                 row=rows, column=columns, pady=20
             )
-            text_label = tkinter.Label(secound_frame, text=titles[j]).grid(
-                row=rows, column=columns
+            text_label = tkinter.Label(secound_frame, text=titles[j])
+            text_label.grid(
+                row=rows, column=columns, sticky='s'
             )
 
             columns += 1
@@ -278,3 +287,5 @@ def free_add_ons():
 
     root.mainloop()
 
+
+free_add_ons()
