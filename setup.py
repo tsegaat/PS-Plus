@@ -4,7 +4,7 @@ with open("README.md") as f:
     content = f.read()
 
 setup(
-    name="Playstation",
+    name="playstation",
     packages=find_packages(),
     version="0.1.0",
     long_description=content,

@@ -8,6 +8,13 @@ from tkinter import ttk
 
 
 def ps_plus_games_this_month():
+    """
+    ____________________________
+    Shows a gui window with all
+    of the ps_plus free games
+    this month
+    _______________________________
+    """
 
     # getting the site
     site = requests.get(
@@ -33,7 +40,7 @@ def ps_plus_games_this_month():
 
     root = tkinter.Tk()
     root.resizable(0, 0)
-    root.title("This month's PS Plus games")
+    root.title("This Month's PS Plus Games")
 
     # geting the image to use in the gui
     images = []
@@ -61,62 +68,89 @@ def ps_plus_games_this_month():
     root.mainloop()
 
 
-def ps_plus_games_previous_month():
+def ps_plus_games_next_month():
+    """
+    _____________________________
+    Shows a gui window with all
+    of the ps_plus free games
+    coming the next month
+    ___________________________
+    """
+    try:
+        # getting the site
+        site = requests.get(
+            "https://www.playstation.com/en-au/explore/playstation-plus/this-month-on-ps-plus/"
+        ).content
 
-    # getting the site
-    site = requests.get(
-        "https://www.playstation.com/en-au/explore/playstation-plus/this-month-on-ps-plus/"
-    ).content
+        # making the beautiful soap object
+        bsObj = BeautifulSoup(site, "lxml")
 
-    # making the beautiful soap object
-    bsObj = BeautifulSoup(site, "lxml")
+        # extracting the titles of the games
+        header_tags = bsObj.find_all(class_="tier4Header")[2:4]
+        first_game = header_tags[0].text.strip()
+        secound_game = header_tags[1].text.strip()
 
-    # extracting the titles of the games
-    header_tags = bsObj.find_all(class_="tier4Header")[2:4]
-    first_game = header_tags[0].text.strip()
-    secound_game = header_tags[1].text.strip()
+        # extracting the image wrapper
+        image_wrapper = bsObj.find_all(class_="image-wrapper")[2:4]
 
-    # extracting the image wrapper
-    image_wrapper = bsObj.find_all(class_="image-wrapper")[2:4]
+        # geting the image and putting it into a list
+        image_tags = []
+        for i in range(len(image_wrapper)):
+            image = image_wrapper[i].find("img").get("src")
+            image_tags.append(image)
 
-    # geting the image and putting it into a list
-    image_tags = []
-    for i in range(len(image_wrapper)):
-        image = image_wrapper[i].find("img").get("src")
-        image_tags.append(image)
+        root = tkinter.Tk()
+        root.resizable(0, 0)
+        root.title("Next Month PS Plus games")
 
-    root = tkinter.Tk()
-    root.resizable(0, 0)
-    root.title("Previous month's PS Plus games")
-    root['background'] = 'black'
+        # geting the image to use in the gui
+        images = []
+        for i in range(2):
+            with urllib.request.urlopen("https:" + image_tags[i]) as u:
+                raw_data = u.read()
+                im = Image.open(BytesIO(raw_data))
+                image = ImageTk.PhotoImage(im)
+                images.append(image)
 
-    # geting the image to use in the gui
-    images = []
-    for i in range(2):
-        with urllib.request.urlopen("https:" + image_tags[i]) as u:
-            raw_data = u.read()
-            im = Image.open(BytesIO(raw_data))
-            image = ImageTk.PhotoImage(im)
-            images.append(image)
+        # putting it on the screen
+        image1 = tkinter.Label(root, image=images[0], width=500)
+        image1.grid(column=0, row=0, padx=50)
 
-    # putting it on the screen
-    image1 = tkinter.Label(root, image=images[0], width=500)
-    image1.grid(column=0, row=0, padx=50)
+        image2 = tkinter.Label(root, image=images[1], width=500)
+        image2.grid(column=1, row=0, padx=50)
 
-    image2 = tkinter.Label(root, image=images[1], width=500)
-    image2.grid(column=1, row=0, padx=50)
+        # putting the title on the screen
+        text1 = tkinter.Label(root, text=first_game, font="cursive")
+        text1.grid(column=0, row=1, padx=50)
 
-    # putting the title on the screen
-    text1 = tkinter.Label(root, text=first_game, font="cursive")
-    text1.grid(column=0, row=1, padx=50)
+        text2 = tkinter.Label(root, text=secound_game, font="cursive")
+        text2.grid(column=1, row=1, padx=50)
 
-    text2 = tkinter.Label(root, text=secound_game, font="cursive")
-    text2.grid(column=1, row=1, padx=50)
+        root.mainloop()
+    except:
+        root = tkinter.Tk()
+        root.resizable(0, 0)
+        root.title("Next Month PS Plus games")
+        label1 = tkinter.Label(
+            root,
+            text="Next Month's Playstation Plus Games Are Not Yet Known",
+            font="cursive",
+        )
 
-    root.mainloop()
+        label1.pack()
+
+        root.mainloop()
 
 
 def ps_plus_price():
+    """
+    __________________________
+    Shows a gui window with all
+    of the types of ps_plus
+    subscriptions
+    __________________________
+    """
+
     # getting the site
     site = requests.get(
         "https://www.playstation.com/en-us/explore/playstation-plus/?smcid=other%252525253Aen-us%252525253Ablank%252525253Aprimary%252525252520nav%252525253Amsg-services%252525253Aps-plus"
@@ -164,6 +198,13 @@ def ps_plus_price():
 
 
 def free_add_ons():
+    """
+    _______________________________
+    Shows a gui window with all
+    the free in game addons for
+    ps-plus subscribers
+    ________________________________
+    """
 
     titles = []
     images = []
@@ -177,12 +218,10 @@ def free_add_ons():
     bsObj1 = BeautifulSoup(site1, "lxml")
 
     for i in range(len(bsObj1.find_all(class_="grid-cell__title"))):
-        titles.append(bsObj1.find_all(class_="grid-cell__title")
-                      [i].find("span").text)
+        titles.append(bsObj1.find_all(class_="grid-cell__title")[i].find("span").text)
     for i in range(len(bsObj1.find_all(class_="grid-cell__title"))):
         images.append(
-            bsObj1.find_all(
-                class_="product-image__img--main")[i].find("img").get("src")
+            bsObj1.find_all(class_="product-image__img--main")[i].find("img").get("src")
         )
 
     # getting the next page
@@ -194,12 +233,10 @@ def free_add_ons():
     bsObj2 = BeautifulSoup(site2, "lxml")
 
     for i in range(len(bsObj2.find_all(class_="grid-cell__title"))):
-        titles.append(bsObj2.find_all(class_="grid-cell__title")
-                      [i].find("span").text)
+        titles.append(bsObj2.find_all(class_="grid-cell__title")[i].find("span").text)
     for i in range(len(bsObj2.find_all(class_="grid-cell__title"))):
         images.append(
-            bsObj2.find_all(
-                class_="product-image__img--main")[i].find("img").get("src")
+            bsObj2.find_all(class_="product-image__img--main")[i].find("img").get("src")
         )
 
     # getting the third page
@@ -208,22 +245,20 @@ def free_add_ons():
     ).content
 
     # making the beautiful soap object
-    bsObj3 = BeautifulSoup(site2, "lxml")
+    bsObj3 = BeautifulSoup(site3, "lxml")
 
     for i in range(len(bsObj3.find_all(class_="grid-cell__title"))):
-        titles.append(bsObj3.find_all(class_="grid-cell__title")
-                      [i].find("span").text)
+        titles.append(bsObj3.find_all(class_="grid-cell__title")[i].find("span").text)
     for i in range(len(bsObj3.find_all(class_="grid-cell__title"))):
         images.append(
-            bsObj3.find_all(
-                class_="product-image__img--main")[i].find("img").get("src")
+            bsObj3.find_all(class_="product-image__img--main")[i].find("img").get("src")
         )
 
     # putting the titles on the gui
     root = tkinter.Tk()
-    root.title("Free addons")
-    root.geometry("1000x1000")
-    root.resizable(0, 0)
+    root.title("Free Addons")
+    root.geometry("1000x500")
+    root.resizable(0, 1000)
 
     # Creating a scroll bar
     # Create a main frame
@@ -233,23 +268,21 @@ def free_add_ons():
     # Create a canvas
     my_canvas = tkinter.Canvas(main_frame)
     my_canvas.pack(side="left", fill="both", expand=1)
-    my_canvas['background'] = 'black'
+    my_canvas["background"] = "black"
 
     # Add a scrollbar to the canvas
-    my_scrollbar = ttk.Scrollbar(
-        main_frame, orient="vertical", command=my_canvas.yview)
+    my_scrollbar = ttk.Scrollbar(main_frame, orient="vertical", command=my_canvas.yview)
     my_scrollbar.pack(side="right", fill="y")
 
     # Configure the canvas
     my_canvas.configure(yscrollcommand=my_scrollbar.set)
     my_canvas.bind(
-        "<Configure>", lambda e: my_canvas.configure(
-            scrollregion=my_canvas.bbox("all"))
+        "<Configure>", lambda e: my_canvas.configure(scrollregion=my_canvas.bbox("all"))
     )
 
     # Create another frame in the canvas
     secound_frame = tkinter.Frame(my_canvas)
-    secound_frame['background'] = 'black'
+    secound_frame["background"] = "black"
 
     # Add the new frame to a window in the canvas
     my_canvas.create_window((0, 0), window=secound_frame, anchor="nw")
@@ -274,9 +307,7 @@ def free_add_ons():
                 row=rows, column=columns, pady=20
             )
             text_label = tkinter.Label(secound_frame, text=titles[j])
-            text_label.grid(
-                row=rows, column=columns, sticky='s'
-            )
+            text_label.grid(row=rows, column=columns, sticky="s")
 
             columns += 1
 
